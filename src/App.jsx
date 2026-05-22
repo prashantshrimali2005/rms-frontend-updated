@@ -2,26 +2,51 @@ import React from 'react'
 import Sidebar from './components/Sidebar'
 import Staff from './pages/Staff'
 import Dashboard from './pages/Dashboard'
-import { Routes, Route } from 'react-router-dom'
 import TablesPage from './pages/TablesPage'
 import Report from './pages/Report'
 import Billing from './pages/Billing'
 import Order from './pages/Order'
+import Login from './pages/Login2'
+import CustomerMenu from './pages/CustomerMenu'
+
+import { Routes, Route, useLocation } from 'react-router-dom'
 
 const App = () => {
+
+  const location = useLocation()
+
+  const hideSidebar = location.pathname === "/login"
+
   return (
+
     <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="ml-20 md:ml-60 min-h-screen w-full p-4 md:p-8 overflow-x-hidden">
-         <Routes>
+
+      {!hideSidebar && <Sidebar />}
+
+      <main className={`${!hideSidebar ? "ml-20 sm:ml-24 md:ml-64" : ""} min-h-screen p-4 md:p-8 w-full`}>
+
+        <Routes>
+
+          <Route path="/login" element={<Login />} />
+
           <Route path="/" element={<Dashboard />} />
+
           <Route path="/staff" element={<Staff />} />
-          <Route path="/table" element={<TablesPage/>}/>
-          <Route path="/report" element={<Report/>}/>
-          <Route path="/billing" element={<Billing/>}/>
-          <Route path="/order" element={<Order/>}/>
+
+          <Route path="/table" element={<TablesPage />} />
+
+          <Route path="/report" element={<Report />} />
+
+          <Route path="/billing" element={<Billing />} />
+
+          <Route path="/order" element={<Order />} />
+
+          <Route path="/customer-menu/*" element={<CustomerMenu />} />
+
         </Routes>
+
       </main>
+
     </div>
   )
 }
